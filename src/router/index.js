@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
-import Index from '@/components/index'
-import ContentText from '@/components/con-text'
+import IvIndex from '@/components/iv-index'
+import ConText from '@/components/con-text'
 import AddActivities from '@/components/add-activities/add-activities'
 import RegistrationDetails from '@/components/registration-details/registration-details'
 import HistoricalEvents from '@/components/historical-events/historical-events'
@@ -29,11 +29,11 @@ const vueRouter = new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index,
+      component: IvIndex,
       children: [
         {
           path: '/index',
-          component: ContentText,
+          component: ConText,
           redirect: 'index/registration-details',
           children: [
             {

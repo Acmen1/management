@@ -128,9 +128,7 @@
           <Exit></Exit>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </Header>
-        <con-text :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
-          <router-view></router-view>
-        </con-text>
+        <con-text :style="{margin: '20px', background: '#fff', minHeight: '260px'}"/>
       </Layout>
     </Layout>
   </div>

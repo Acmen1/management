@@ -50,10 +50,13 @@
                     size: 'small'
                   },
                   attrs: {
-                    src: params.row.address, style: 'width: 90px;height: 90px;border-radius: 2px;float:left'
+                    src: params.row.address
                   },
                   style: {
-
+                    width: '90px',
+                    height: '90px',
+                    float: 'left',
+                    margin: '5px 5px 5px 0px'
                   }
                 }),
                 h('img', {
@@ -62,10 +65,13 @@
                     size: 'small'
                   },
                   attrs: {
-                    src: params.row.address, style: 'width: 90px;height: 90px;border-radius: 2px;float:left'
+                    src: params.row.address
                   },
                   style: {
-
+                    width: '90px',
+                    height: '90px',
+                    float: 'left',
+                    margin: '5px 5px 5px 0px'
                   }
                 })
               ])
