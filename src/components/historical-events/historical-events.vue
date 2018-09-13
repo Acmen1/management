@@ -2,8 +2,28 @@
   <div>
     <Table border :columns="columns7" :data="data6"></Table>
     <Page :total="100" class="page-list" />
-    <Modal v-model="modal11" fullscreen title="Fullscreen Modal">
-      <div>This is a fullscreen modal</div>
+    <Modal v-model="modal11" fullscreen title="活动详情">
+      <div>
+        <div>
+          <div>活动名称：1111111</div>
+          <div>开始时间：1111111</div>
+          <div>结束时间：1111111</div>
+        </div>
+        <div>
+          活动规则：5555555
+        </div>
+      </div>
+      <Menu mode="horizontal" :theme="theme1" active-name="1">
+        <MenuItem name="1">
+          <Icon type="ios-paper" />
+          投票记录
+        </MenuItem>
+        <MenuItem name="2">
+          <Icon type="ios-people" />
+          充值记录
+        </MenuItem>
+      </Menu>
+      <Table border :columns="columns10" :data="data10"></Table>
     </Modal>
   </div>
 </template>
@@ -16,6 +36,7 @@
     data () {
       return {
         modal11: false,
+        theme1: 'light',
         columns7: [
           {
             title: '活动名称',
@@ -59,7 +80,51 @@
             }
           }
         ],
-        data6: []
+        data6: [],
+        columns10: [
+          {
+            title: '名字',
+            key: 'name'
+          },
+          {
+            title: '人气',
+            key: 'age'
+          },
+          {
+            title: '名次',
+            key: 'address'
+          },
+          {
+            title: '海报',
+            key: 'address'
+          },
+          {
+            title: '个人介绍',
+            key: 'address'
+          }
+        ],
+        data10: [
+          {
+            name: 'John Brown',
+            age: 18,
+            address: 'New York No. 1 Lake Park'
+          },
+          {
+            name: 'Jim Green',
+            age: 24,
+            address: 'London No. 1 Lake Park'
+          },
+          {
+            name: 'Joe Black',
+            age: 30,
+            address: 'Sydney No. 1 Lake Park'
+          },
+          {
+            name: 'Jon Snow',
+            age: 26,
+            address: 'Ottawa No. 2 Lake Park'
+          }
+        ]
       }
     },
     methods: {
