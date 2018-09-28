@@ -1,0 +1,43 @@
+<template name="signUp">
+  <view class='sign-content'>
+    <view class=''>
+      <view class='sign-content-ipt'>
+        <text>姓<text class='sign-spacing'>引</text>名：</text>
+        <input placeholder-class="mask-input" bindinput="name"/>
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-ipt'>
+        <radio-group class="radio-group" bindchange="gerderChange">
+          <text>姓<text class='sign-spacing'>引</text>别：</text>
+          <radio value="男" checked="true" />男
+          <radio value="女" />女
+        </radio-group>
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-ipt sing-position'>
+        <text>手机号：</text>
+        <input type='text' bindinput="phone"/>
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-tra'>
+        <text>个人介绍：</text>
+        <textarea bindblur="bindTextAreaBlur" bindinput="description" maxlength='100' placeholder-class='sign-textarea' placeholder="请填写自己的个人参赛宣言(最多输入100个字符)" />
+      </view>
+    </view>
+    <view>
+      <text>参赛照片：</text>
+      <view class='sign-addimg'>
+        <view wx:for="{{pics}}" wx:key="{{index}}">
+          <image src='{{item}}' class="sign-upload" data-id='{{index}}'></image>
+        </view>
+        <image wx:if="{{pics.length <= 8}}" src='../../images/1.jpg' class="sign-upload" bindtap='choose'></image>
+      </view>
+    </view>
+     <view class='submit-button' bindtap='uploadimg'>
+      我要报名
+    </view>
+  </view>
+</template>

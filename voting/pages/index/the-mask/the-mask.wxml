@@ -1,0 +1,59 @@
+<template name="theMask">
+  <view class='mask-btm'>
+    <view class='mask-content'>
+      <view class='mask-name'>
+        <text class='mask-name-text'>支持名字名字</text>
+        <image class='mask-img' src='/images/icon/xx.png' catchtap='maskShow'></image>
+      </view>
+      <view class='mask-type'>
+        <view class='mask-options'>
+          <view class="mask-options-img {{optionsImg === 0 ?'optbdr':''}}" catchtap='topUp' data-index="0">
+            <image src='/images/1.jpg'></image>
+          </view>
+          <view class='mask-sentiment'>
+            <text class='mask-child'>{{freetickets}}票</text>
+            <text>免费</text>
+          </view>
+        </view>
+        <view class='mask-options'>
+          <view class="mask-options-img {{optionsImg === 1 ?'optbdr':''}}" catchtap='topUp' data-index="1">
+            <image src='/images/1.jpg'></image>
+          </view>
+          <view class='mask-sentiment'>
+            <text class='mask-child'>{{firstRatio}}票</text>
+            <text>{{firstMoney}}元</text>
+          </view>
+        </view>
+        <view class='mask-options'>
+          <view class="mask-options-img {{optionsImg === 2 ?'optbdr':''}}" catchtap='topUp' data-index="2">
+            <image src='/images/1.jpg'></image>
+          </view>
+          <view class='mask-sentiment'>
+            <text class='mask-child'>{{secondRatio}}票</text>
+            <text>{{secondMoney}}元</text>
+           </view>
+        </view>
+        <view class='mask-options'>
+          <view class="mask-options-img {{optionsImg === 3 ?'optbdr':''}}" catchtap='topUp' data-index="3">
+            <image src='/images/1.jpg'></image>
+          </view>
+          <view class='mask-sentiment'>
+             <text class='mask-child'>{{thirdRatio}}票</text>
+            <text>{{thirdMoney}}元</text>
+          </view>
+        </view>
+      </view>
+      <view class='mask-plsnbm'>
+        请选择礼物数量
+      </view>
+      <view class='mask-operation-num'>
+        <text class='mask-red' bindtap="minusCount">-</text>
+        <input placeholder-class="mask-input" value='{{num}}'/>
+        <text class='mask-add' bindtap="addCount">+</text>
+      </view>
+      <view class='mask-sentiment-btn' catchtap='castSentiment'>
+        投人气
+      </view>
+    </view>
+  </view>
+</template>

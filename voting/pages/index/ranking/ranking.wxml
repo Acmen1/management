@@ -1,0 +1,25 @@
+<template name="ranking">
+  <view>
+    <!-- 标题 -->
+    <view class='ranking-title'>
+      <text class='ranking'>排名</text>
+      <text class='serial-number'>编号</text>
+      <text class='ranking-name'>姓名</text>
+      <text class='ranking-sentiment'>人气指数</text>
+    </view>
+    <!-- 内容 -->
+    <block wx:for="{{allEntries}}" wx:key="key" wx:for-item="item" wx:for-index="idx">
+      <view class='ranking-content'>
+        <view class='ranking'>
+          <image wx:if='{{idx == 0}}' src='/images/icon/one.png' class='ranking-content-img'></image>
+          <image wx:elif='{{idx == 1}}' src='/images/icon/two.png' class='ranking-content-img'></image>
+          <image wx:elif='{{idx == 2}}' src='/images/icon/three.png' class='ranking-content-img'></image>
+          <text wx:else>{{idx + 1}}</text> 
+        </view>
+        <text class='serial-number'>{{item.id}}</text>
+        <text class='ranking-name'>{{item.name}}</text>
+        <text class='ranking-sentiment sentiment-color'>{{item.totalVotes}}</text>
+      </view>
+    </block>
+  </view>
+</template>

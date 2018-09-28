@@ -1,0 +1,7 @@
+<template name="activityRules">
+  <view class='activity-content'>
+      <block wx:for="{{rulesImg}}" wx:key="key" wx:for-item="idx">
+          <image src='{{idx}}'></image>
+      </block>
+  </view>
+</template>

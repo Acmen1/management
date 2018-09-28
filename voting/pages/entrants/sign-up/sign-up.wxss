@@ -1,0 +1,77 @@
+.sign-content{
+  width: 92%;
+  margin-left: 4%;
+  margin-top:40rpx;
+}
+.sign-content-ipt{
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+  align-items: center;
+}
+.sign-content-ipt text{
+  font-size: 28rpx;
+}
+.sign-content-ipt input{
+  height: 56rpx;
+  width: 80%;
+  border-bottom: 1rpx solid #eee;
+  background-color: #fff;
+  padding: 0rpx 8rpx;
+  color:  #adadad;
+  font-size: 24rpx;
+}
+.radio-group {
+  font-size: 28rpx;
+}
+.sing-position{
+  position: relative;
+}
+.sign-buttonget{
+  position: absolute;
+  width:200rpx;
+  font-size: 26rpx;
+  right: 0;
+  bottom:0;
+  z-index: 222
+}
+.sign-spacing{
+  color: #fff;
+}
+.sign-content-tra{
+  margin-top: 20rpx;
+}
+.sign-textarea{
+  height: 200rpx;
+}
+.sign-content-tra textarea{
+  width: 97%;
+  height: 200rpx;
+  border: 1rpx solid  #eee;
+  font-size: 24rpx;
+  padding:8rpx;
+  margin-top: 20rpx;
+}
+.sign-addimg{
+  overflow: hidden;
+}
+.sign-addimg image{
+  float: left;
+  margin: 16rpx 0 0 16rpx;
+
+}
+.sign-upload{
+  width: 210rpx;
+  height: 210rpx;
+}
+.submit-button{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 10rpx;
+  background: #1DC1CA;
+  margin: 100rpx 0;
+}

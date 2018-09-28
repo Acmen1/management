@@ -1,0 +1,4 @@
+<import src="./sign-up/sign-up.wxml" />
+<import src="./cancel-sign-up/cancel-sign-up.wxml" />
+<template wx:if='{{show}}' is="signUp" data='{{pics:pics}}'/>
+<template wx:if='{{show === false}}' is="cancelSignUp" data='{{...information[0]}}'/>

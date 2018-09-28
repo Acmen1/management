@@ -1,0 +1,31 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/index/personal-details/personal-details",
+    "pages/entrants/entrants"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#1DC1CA",
+    "navigationBarTextStyle":"#fff"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "position": "bottom",
+    "selectedColor":"#1DC1CA",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "投票",
+        "iconPath": "images/tab/yuedu.png",
+        "selectedIconPath": "images/tab/yuedu_hl.png"
+      },
+      {
+        "pagePath": "pages/entrants/entrants",
+        "text": "报名",
+        "iconPath": "images/tab/dianying.png",
+        "selectedIconPath": "images/tab/dianying_hl.png"
+      }
+    ]
+  }
+}

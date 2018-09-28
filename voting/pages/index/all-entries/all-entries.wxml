@@ -1,0 +1,53 @@
+<template name="allEntries">
+  <block wx:for="{{allEntries}}" wx:key="key" wx:for-item="idx">
+    <view class='all-entries'>
+      <view class="all-entries-img" catchtap='pageJump' data-id="{{idx.id}}">
+        <image src='{{idx.pic[0]}}'></image>
+      </view>
+      <view class='all-entries-text'>
+        <text class='text-name'>{{idx.name}}</text> 
+        <text class='text-nub'>{{idx.totalVotes}}人气</text> 
+      </view>
+      <view class='all-entries-btn' catchtap='btnSentiment' data-id="{{idx.id}}">
+        <text>投人气</text>  
+      </view>
+    </view>
+  </block>
+ <!-- <view class='all-entries'>
+    <view class="all-entries-img" catchtap='pageJump'>
+      <image src='/images/1.jpg'></image>
+    </view>
+    <view class='all-entries-text'>
+      <text class='text-name'>名字名字</text> 
+      <text class='text-nub'>5555555人气</text> 
+    </view>
+    <view class='all-entries-btn' catchtap='btnSentiment' data-id="{{1}}">
+      <text>投人气</text>  
+    </view>
+  </view>
+  <view class='all-entries'>
+    <view class="all-entries-img" catchtap='pageJump'>
+      <image src='/images/1.jpg'></image>
+    </view>
+    <view class='all-entries-text'>
+      <text class='text-name'>名字名字</text> 
+      <text class='text-nub'>5555555人气</text> 
+    </view>
+   <view class='all-entries-btn' catchtap='btnSentiment' data-id="{{1}}">
+      <text>投人气</text>  
+    </view>
+  </view>
+  <view class='all-entries'>
+    <view class="all-entries-img" catchtap='pageJump'>
+      <image src='/images/1.jpg'></image>
+    </view>
+    <view class='all-entries-text'>
+      <text class='text-name'>名字名字</text> 
+      <text class='text-nub'>5555555人气</text> 
+    </view>
+    <view class='all-entries-btn' catchtap='btnSentiment' data-id="{{1}}">
+      <text>{{allEntries[0].name}}</text>  
+    </view>
+  </view> -->
+  
+</template>

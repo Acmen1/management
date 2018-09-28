@@ -1,0 +1,69 @@
+@import "../the-mask/the-mask.wxss";
+.personal-detail{
+  width: 94%;
+  margin-left: 3%;
+}
+.detail-content{
+  border: 20rpx solid #f2f2f2;
+}
+.detail-text{
+  display: flex;
+  flex-direction:row;
+  height: 100rpx;
+}
+.detail-title-left{
+  display: flex;
+  flex: 1;
+  justify-content:flex-start;
+  padding-left: 20rpx;
+  align-items: center;
+
+}
+.detail-title-right{
+  display: flex;
+  flex: 1;
+  justify-content:flex-end;
+  text-align: right;
+  padding-right: 20rpx;
+  align-items: center;
+}
+.detail-title-img{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right:8rpx;
+}
+.detail-title-text{
+  margin-right: 20rpx;
+}
+.detail-img,.personal-introduction{
+  width: 94%;
+  margin-left: 3%;
+}
+.detail-img image{
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+.personal-introduction-title{
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #1ec2cb;
+  font-size: 30rpx;
+}
+.personal-introduction-text{
+  text-indent: 2em;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.details-btn{
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  width: 94%;
+  margin:50rpx 3%;
+  background: #1ec2cb;
+  color: #fff;
+  border-radius:5px; 
+}

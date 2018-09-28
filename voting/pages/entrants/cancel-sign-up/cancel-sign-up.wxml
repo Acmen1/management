@@ -1,0 +1,41 @@
+<template name="cancelSignUp">
+  <view class='sign-content'>
+    <view class=''>
+      <view class='sign-content-ipt'>
+        <text>姓<text class='sign-spacing'>引</text>名：</text>
+        <text>{{name}}</text> 
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-ipt'>
+       <text>姓<text class='sign-spacing'>引</text>别：</text>
+       <text>{{gerder}}</text> 
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-ipt sing-position'>
+        <text>手机号：</text>
+        <text>{{phone}}</text> 
+      </view>
+    </view>
+    <view>
+      <view class='sign-content-tra'>
+        <text>个人介绍：</text>
+        <text>
+          {{description}}
+        </text>
+      </view>
+    </view>
+    <view>
+      <text>参赛照片：</text>
+      <view class='sign-addimg'>
+        <view wx:for="{{pic}}" wx:for-item="item" wx:key="{{index}}">
+          <image src='{{item}}' class="sign-upload" data-id='{{index}}' bindtap='biggerImg'></image>
+        </view>
+      </view>
+    </view>
+    <view class='submit-button' data-id='{{id}}' catchtap='cancel'>
+      取消报名
+    </view>
+  </view>
+</template>

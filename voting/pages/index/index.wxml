@@ -1,0 +1,46 @@
+<import src="./all-entries/all-entries.wxml" />
+<import src="./ranking/ranking.wxml" />
+<import src="./the-mask/the-mask.wxml" />
+<import src="./activity-rules/activity-rules.wxml" />
+<view class="search">
+  <input type="text" placeholder="请输入姓名或编号" placeholder-class="placeholder" />
+  <icon type="search" class="search-img" size="16" color="#405f80"></icon>
+  <!-- bindfocus="onBindFocus"
+  bindblur="onBindBlur" -->
+</view>
+<view class='container-nub'>
+  <view class='container-text'>
+    <view>参赛选手</view>
+    <view>{{allPlayes}}</view>
+  </view>
+  <view class='container-text'>
+    <view>累计人气</view>
+    <view>{{alwaysPopular}}</view>
+  </view>
+</view>
+ <view class="goods-tab-box">
+    <view class="goods-tab-nav {{curIndex === 0 ?'on':''}}" bindtap="bindTap" data-index="0">全部参赛</view>
+    <view class="goods-tab-nav {{curIndex === 1 ?'on':''}}" bindtap="bindTap" data-index="1">最新参赛</view>
+    <view class="goods-tab-nav {{curIndex === 2 ?'on':''}}" bindtap="bindTap" data-index="2">排名</view>
+    <view class="goods-tab-nav {{curIndex === 3 ?'on':''}}" bindtap="bindTap" data-index="3">活动规则</view>
+    <view class="goods-content">
+      <view wx:if="{{curIndex === 0}}">
+        <template is="allEntries" data="{{allEntries}}"/>
+      </view>
+      <view wx:if="{{curIndex === 1}}">
+        <template is="allEntries" data="{{allEntries}}"/>
+      </view>
+      <view wx:if="{{curIndex === 2}}">
+        <template is="ranking" data='{{allEntries}}' />
+      </view>
+      <view wx:if="{{curIndex === 3}}">
+        <template is="activityRules" data='{{rulesImg}}'/>
+      </view>
+    </view>
+</view> 
+<view wx:if="{{maskShow}}">
+   <template is="theMask" data='{{optionsImg,...activity,...remainingVotes,num}}'/>
+</view>
+<view >
+
+</view>

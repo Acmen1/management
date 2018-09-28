@@ -1,0 +1,8 @@
+.activity-content{
+  background: #fff;
+  height: 200px;
+  margin-top: 20rpx;
+}
+.activity-content image{
+  width: 100%
+}

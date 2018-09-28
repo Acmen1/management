@@ -1,0 +1,33 @@
+<import src="../the-mask/the-mask.wxml" />
+<view class='personal-detail'>
+  <view class='detail-content'>
+    <view class='detail-text'>
+      <view class='detail-title-left'>
+        <image class='detail-title-img' src='/images/icon/menber.png'></image>
+        <text class='detail-title-text'>{{contentData[0].id}}</text>
+        <text>{{contentData[0].name}}</text>
+      </view>
+      <view class='detail-title-right'>
+        <image class='detail-title-img' src='/images/icon/member-q.png'></image>
+        <text class='detail-title-text'>{{contentData[0].totalVotes}}</text>
+      </view>
+    </view>
+    <view class='detail-img'>
+      <block wx:for="{{contentData[0].pic}}" wx:key="key" wx:for-item="idx">
+          <image src='{{idx}}'></image>
+      </block>
+    </view>
+    <view class='personal-introduction'>
+      <view class='personal-introduction-title'>个人介绍：</view>
+      <view class='personal-introduction-text'>
+        {{contentData[0].description}}
+      </view> 
+    </view>
+     <view class='details-btn' catchtap='btnSentiment'>
+        投人气
+      </view>
+  </view>
+  <view wx:if="{{maskShow}}">
+    <template is="theMask" data='{{optionsImg}}' />
+  </view>
+</view>

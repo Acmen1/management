@@ -1,0 +1,47 @@
+.all-entries{
+  width: 48.6%;
+  height: 480rpx;
+  margin-top: 20rpx;
+  background: #fff;
+}
+.all-entries:nth-of-type(odd){
+ float: left;
+}
+.all-entries:nth-of-type(even){
+   float: right;
+}
+.all-entries-img{
+  width: 100%;
+  height: 380rpx;
+}
+.all-entries-img image{
+  width: 100%;
+  height: 100%;
+}
+.all-entries-text{
+  height: 30rpx;
+  margin: 6rpx 10rpx;
+}
+.text-name{
+  float: left;
+  font-size: 24rpx;
+}
+.text-nub{
+  float:right;
+  font-size: 24rpx;
+}
+.all-entries-btn{
+  width: 94%;
+  margin-left: 3%;
+  height: 50rpx;
+  background: #1ec2cb;
+  border-radius:5px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.all-entries-btn text{
+  color: #fff;
+}
