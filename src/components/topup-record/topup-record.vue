@@ -1,52 +1,77 @@
 <template>
   <div>
-    <Table border :columns="columns7" :data="data6"></Table>
+    <Table border :columns="toupTitle" :data="toupList"></Table>
   </div>
 </template>
 
 <script>
+  import qs from 'qs'
   export default {
     name: 'topup-record',
     components: {
     },
     data () {
       return {
-        columns7: [
+        toupTitle: [
           {
             title: '订单号',
-            key: 'name'
+            key: 'orderId'
           },
           {
-            title: '金额',
-            key: 'age'
+            title: '金额(元)',
+            key: 'orderMoney',
+            render: (h, params) => {
+              return h('div', '¥' + params.row.orderMoney
+              )
+            }
           },
           {
             title: '充值时间',
-            key: 'address'
+            key: 'createTime',
+            render: (h, params) => {
+              return h('div', this.formatDate(new Date(params.row.createTime), 'yyyy-MM-dd hh:mm')
+              )
+            }
           }
         ],
-        data6: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
+        toupList: []
+      }
+    },
+    mounted () {
+      let that = this
+      let activityId = qs.stringify({
+        activityId: 29
+      })
+      this.$axios({
+        method: 'POST',
+        url: '/api/vote/order/selectByActivityId',
+        data: activityId
+      }).then((res) => {
+        let data = res.data.data.list
+        that.toupList = data
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    methods: {
+      formatDate (date, fmt) {
+        let o = {
+          'M+': date.getMonth() + 1, // 月份
+          'd+': date.getDate(), // 日
+          'h+': date.getHours(), // 小时
+          'm+': date.getMinutes(), // 分
+          's+': date.getSeconds(), // 秒
+          'S': date.getMilliseconds() // 毫秒
+        }
+        if (/(y+)/.test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+        }
+        for (var k in o) {
+          if (new RegExp('(' + k + ')').test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
           }
-        ]
+        }
+        return fmt
       }
     }
   }

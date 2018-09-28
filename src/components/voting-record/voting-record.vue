@@ -1,72 +1,92 @@
 <template>
   <div>
-    <Table border :columns="columns7" :data="data6"></Table>
+    <Table border :columns="votingTitle" :data="votingList"></Table>
+    <Modal title="查看大图" v-model="imgShow">
+      <img :src="imgSrc" v-if="imgShow" style="width: 100%">
+    </Modal>
   </div>
 </template>
 
 <script>
+  import qs from 'qs'
   export default {
     name: 'voting-record',
     components: {
     },
     data () {
       return {
-        columns7: [
+        imgSrc: '',
+        imgShow: false,
+        votingTitle: [
+          {
+            type: 'index',
+            width: 60,
+            align: 'center',
+            content: 'mingch'
+          },
           {
             title: '名字',
             key: 'name'
           },
           {
             title: '人气',
-            key: 'age'
-          },
-          {
-            title: '名次',
-            key: 'address'
+            key: 'totalVotes'
           },
           {
             title: '海报',
-            key: 'address'
+            key: 'pic',
+            render: (h, params) => {
+              let arr = []
+              for (let i = 0; i < params.row.pic.length; i++) {
+                let img = h('img', {
+                  props: {},
+                  attrs: { src: params.row.pic[i] },
+                  style: {
+                    width: '90px',
+                    height: '90px',
+                    float: 'left',
+                    margin: '5px 5px 5px 0px'
+                  },
+                  on: {
+                    click: (e) => {
+                      this.show(e)
+                    }
+                  }
+                })
+                arr.push(img)
+              }
+              return h('div', arr)
+            }
           },
           {
             title: '个人介绍',
-            key: 'address'
+            key: 'description'
           }
         ],
-        data6: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
-        ]
+        votingList: []
       }
     },
     methods: {
-      show (index) {
-        this.$Modal.info({
-          title: 'User Info',
-          content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-        })
-      },
-      remove (index) {
-        this.data6.splice(index, 1)
+      show (e) {
+        this.imgSrc = e.target.src
+        this.imgShow = true
       }
+    },
+    mounted () {
+      let that = this
+      let activityId = qs.stringify({
+        activityId: 29
+      })
+      this.$axios({
+        method: 'POST',
+        url: '/api/user/apply/findAllOrRank',
+        data: activityId
+      }).then((res) => {
+        let data = res.data.data.list
+        that.votingList = data
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 </script>

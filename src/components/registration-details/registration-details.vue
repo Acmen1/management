@@ -1,81 +1,69 @@
 <template>
   <div>
-    <Card>
-      <Table border :columns="columns7" :data="data6"></Table>
-    </Card>
+    <Table border :columns="detailsTitle" :data="detailsList"></Table>
+    <Modal title="查看大图" v-model="imgShow">
+      <img :src="imgSrc" v-if="imgShow" style="width: 100%">
+    </Modal>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
+  import qs from 'qs'
   export default {
     name: 'home',
     components: {
     },
     data () {
       return {
-        columns7: [
+        imgSrc: '',
+        imgShow: false,
+        detailsList: [],
+        detailsTitle: [
           {
             title: '名字',
-            key: 'name',
-            width: 200,
-            render: (h, params) => {
-              return h('div', [
-                h('Icon', {
-                  props: {
-                    type: 'person'
-                  }
-                }),
-                h('strong', params.row.name)
-              ])
-            }
+            key: 'name'
           },
           {
             title: '报名时间',
-            key: 'age',
-            width: 200
+            key: 'applyTime',
+            render: (h, params) => {
+              return h('div', this.formatDate(new Date(params.row.applyTime), 'yyyy-MM-dd hh:mm')
+              )
+            }
           },
           {
-            title: '头像',
-            key: 'address',
+            title: '海报',
+            key: 'pic',
             render: (h, params) => {
-              return h('div', {
-                attrs: {
-                  style: ''
-                }
-              }, [
-                h('img', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  attrs: {
-                    src: params.row.address
-                  },
+              let arr = []
+              for (let i = 0; i < params.row.pic.length; i++) {
+                let img = h('img', {
+                  props: {},
+                  attrs: { src: params.row.pic[i] },
                   style: {
                     width: '90px',
                     height: '90px',
                     float: 'left',
                     margin: '5px 5px 5px 0px'
-                  }
-                }),
-                h('img', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
                   },
-                  attrs: {
-                    src: params.row.address
-                  },
-                  style: {
-                    width: '90px',
-                    height: '90px',
-                    float: 'left',
-                    margin: '5px 5px 5px 0px'
+                  on: {
+                    click: (e) => {
+                      this.show(e)
+                    }
                   }
                 })
-              ])
+                arr.push(img)
+              }
+              return h('div', arr)
             }
+          },
+          {
+            title: '手机号',
+            key: 'phone'
+          },
+          {
+            title: '个人介绍',
+            key: 'description'
           },
           {
             title: '操作',
@@ -94,7 +82,7 @@
                   },
                   on: {
                     click: () => {
-                      this.show(params.index)
+                      this.through(params.index)
                     }
                   }
                 }, '通过验证'),
@@ -105,63 +93,92 @@
                   },
                   on: {
                     click: () => {
-                      this.remove(params.index)
+                      this.notThrough(params.index)
                     }
                   }
                 }, '不合格')
               ])
             }
           }
-        ],
-        data6: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: require('./../../assets/images/login-bg.jpg')
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
         ]
       }
     },
     methods: {
-      show (index) {
-        this.$Modal.info({
-          title: 'User Info',
-          content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-        })
+      show (e) {
+        this.imgSrc = e.target.src
+        this.imgShow = true
       },
       remove (index) {
         this.data6.splice(index, 1)
+      },
+      formatDate (date, fmt) {
+        let o = {
+          'M+': date.getMonth() + 1, // 月份
+          'd+': date.getDate(), // 日
+          'h+': date.getHours(), // 小时
+          'm+': date.getMinutes(), // 分
+          's+': date.getSeconds(), // 秒
+          'S': date.getMilliseconds() // 毫秒
+        }
+        if (/(y+)/.test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+        }
+        for (var k in o) {
+          if (new RegExp('(' + k + ')').test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+          }
+        }
+        return fmt
+      },
+      through (index) {
+        let id = qs.stringify({
+          id: this.detailsList[index].id
+        })
+        this.$axios({
+          method: 'POST',
+          url: '/api/user/apply/pass',
+          data: id
+        }).then((res) => {
+          let data = res.data
+          if (data.code === 200) {
+            this.$Message.success('验证成功')
+            this.detailsList.splice(index, 1)
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      },
+      notThrough (index) {
+        let id = qs.stringify({
+          id: this.detailsList[index].id
+        })
+        this.$axios({
+          method: 'POST',
+          url: '/api/user/apply/fail',
+          data: id
+        }).then((res) => {
+          let data = res.data
+          if (data.code === 200) {
+            this.$Message.error('验证未通过')
+            this.detailsList.splice(index, 1)
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       }
     },
     mounted () {
-      axios({
+      let that = this
+      let activityId = qs.stringify({
+        activityId: 29
+      })
+      this.$axios({
         method: 'POST',
-        url: '/api/sys/activity/listActivity',
-        data: {
-          pagNum: 1,
-          pagSize: 1
-        },
-        headers: {
-          'Accept': 'application/json',
-          'content-type': 'application/json'
-        }
+        url: '/api/user/apply/selectByActivityId',
+        data: activityId
       }).then((res) => {
-        console.log(res)
+        let data = res.data.data.list
+        that.detailsList = data
       }).catch((err) => {
         console.log(err)
       })

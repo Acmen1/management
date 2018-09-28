@@ -5,15 +5,15 @@
     <Modal v-model="details" fullscreen footer-hide title="活动详情">
       <div class="his-title">
         <div class="his-title-name">
-          <div>活动名称：1111111</div>
-          <div>开始时间：1111111</div>
-          <div>结束时间：1111111</div>
+          <div>活动名称：{{contentArr.activityName}}</div>
+          <div>开始时间：{{formatDate(new Date(contentArr.startTime), 'yyyy-MM-dd hh:mm')}}</div>
+          <div>结束时间：{{formatDate(new Date(contentArr.endTime), 'yyyy-MM-dd hh:mm')}}</div>
         </div>
         <div class="his-title-img">
           <p>活动规则:</p>
-          <img src="./../../assets/images/login-bg.jpg" alt="">
-          <img src="./../../assets/images/login-bg.jpg" alt="">
-          <img src="./../../assets/images/login-bg.jpg" alt="">
+          <span class="forimg" v-for="src in contentArr.pic">
+            <img :src="src" alt="">
+          </span>
         </div>
       </div>
       <Menu mode="horizontal" theme="light" active-name="1" @on-select="onSelect">
@@ -29,16 +29,22 @@
       <Table v-if="onSelectShow == 1" border :columns="voteTitle" :data="voteArr"></Table>
       <Table v-if="onSelectShow == 2" border :columns="topUpTitle" :data="topUpArr"></Table>
     </Modal>
+    <Modal title="查看大图" v-model="imgShow">
+      <img :src="imgSrc" v-if="imgShow" style="width: 100%">
+    </Modal>
   </div>
 </template>
 
 <script>
+  import qs from 'qs'
   export default {
     name: 'historical-events',
     components: {
     },
     data () {
       return {
+        imgSrc: '',
+        imgShow: false,
         onSelectShow: 1,
         details: false,
         historicalTitle: [
@@ -48,9 +54,9 @@
           },
           {
             title: '开始时间',
-            key: 'createTime',
+            key: 'startTime',
             render: (h, params) => {
-              return h('div', this.formatDate(new Date(params.row.createTime), 'yyyy-MM-dd hh:mm')
+              return h('div', this.formatDate(new Date(params.row.startTime), 'yyyy-MM-dd hh:mm')
               )
             }
           },
@@ -83,8 +89,8 @@
                   },
                   on: {
                     click: () => {
-                      this.modal11 = true
-                      this.show(params.index)
+                      this.details = true
+                      this.detailsShow(params.index)
                     }
                   }
                 }, '查看详情')
@@ -95,89 +101,110 @@
         historicalArr: [],
         voteTitle: [
           {
+            type: 'index',
+            width: 60,
+            align: 'center',
+            content: 'mingch'
+          },
+          {
             title: '名字',
             key: 'name'
           },
           {
             title: '人气',
-            key: 'age'
-          },
-          {
-            title: '名次',
-            key: 'address'
+            key: 'totalVotes'
           },
           {
             title: '海报',
-            key: 'address'
+            key: 'pic',
+            render: (h, params) => {
+              let arr = []
+              for (let i = 0; i < params.row.pic.length; i++) {
+                let img = h('img', {
+                  props: {},
+                  attrs: { src: params.row.pic[i] },
+                  style: {
+                    width: '90px',
+                    height: '90px',
+                    float: 'left',
+                    margin: '5px 5px 5px 0px'
+                  },
+                  on: {
+                    click: (e) => {
+                      this.show(e)
+                    }
+                  }
+                })
+                arr.push(img)
+              }
+              return h('div', arr)
+            }
           },
           {
             title: '个人介绍',
-            key: 'address'
+            key: 'description'
           }
         ],
-        voteArr: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
-        ],
+        voteArr: [],
         topUpTitle: [
           {
             title: '订单号',
-            key: 'name'
+            key: 'orderId'
           },
           {
-            title: '金额',
-            key: 'age'
+            title: '金额(元)',
+            key: 'orderMoney',
+            render: (h, params) => {
+              return h('div', '¥' + params.row.orderMoney
+              )
+            }
           },
           {
             title: '充值时间',
-            key: 'address'
+            key: 'createTime',
+            render: (h, params) => {
+              return h('div', this.formatDate(new Date(params.row.createTime), 'yyyy-MM-dd hh:mm')
+              )
+            }
           }
         ],
-        topUpArr: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
-        ]
+        topUpArr: [],
+        contentArr: ''
       }
     },
     methods: {
-      show (index) {
-        console.log(this.data6[index].activityId)
+      detailsShow (index) {
+        this.contentArr = this.historicalArr[index]
+        let activityId = qs.stringify({
+          activityId: this.historicalArr[index].activityId
+        })
+        this.$axios({
+          method: 'POST',
+          url: '/api/user/apply/findAllOrRank',
+          data: activityId
+        }).then((res) => {
+          let data = res.data.data.list
+          this.voteArr = data
+        }).catch((err) => {
+          console.log(err)
+        })
+        this.$axios({
+          method: 'POST',
+          url: '/api/vote/order/selectByActivityId',
+          data: activityId
+        }).then((res) => {
+          let data = res.data.data.list
+          this.topUpArr = data
+        }).catch((err) => {
+          console.log(err)
+        })
+      },
+      onSelect (name) {
+        this.onSelectShow = name
+      },
+      show (e) {
+        this.imgSrc = e.target.src
+        this.imgShow = true
       },
       formatDate (date, fmt) {
         let o = {
@@ -197,9 +224,6 @@
           }
         }
         return fmt
-      },
-      onSelect (name) {
-        this.onSelectShow = name
       }
     },
     mounted () {
@@ -240,6 +264,9 @@
     }
     .his-title-img{
       width: 70%;
+      .forimg{
+        float: left;
+      }
     }
     div{
       float: left;
