@@ -9,7 +9,7 @@ import http from '@/libs/axios'
 import 'iview/dist/styles/iview.css'
 import './assets/css/reset.css'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 Vue.use(iView)
 Vue.use(Vuex)
 const store = new Vuex.Store({

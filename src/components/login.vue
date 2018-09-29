@@ -6,14 +6,14 @@
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录">
         <div class="login-name">
-          <Input v-model="form.userName" placeholder="请输入用户名">
+          <Input v-model="userName" placeholder="请输入用户名">
             <span slot="prepend">
               <Icon :size="16" type="ios-person"></Icon>
             </span>
           </Input>
         </div>
         <div class="login-pass">
-          <Input type="password" v-model="form.password" placeholder="请输入密码">
+          <Input type="password" v-model="password" placeholder="请输入密码">
             <span slot="prepend">
               <Icon :size="14" type="md-lock"></Icon>
             </span>
@@ -34,27 +34,28 @@
   export default {
     data () {
       return {
-        form: {
-          userName: '2@qq.com',
-          password: '123456'
-        }
+        userName: 'admin',
+        password: 'admin'
       }
     },
     methods: {
       login () {
         this.$axios({
-          method: 'GET',
+          method: 'post',
           url: 'api/user/login',
           data: {
-            username: this.form.userName,
-            password: this.form.password
+            username: this.userName,
+            password: this.password
           },
           headers: {
             'Accept': 'application/json',
             'content-type': 'application/json'
           }
         }).then((res) => {
-          console.log(res)
+          let data = res.data
+          if (data.code === 200) {
+            this.$router.push('/index/registration-details')
+          }
         }).catch((err) => {
           console.log(err)
         })
